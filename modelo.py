@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
-class Programa:
+#Classes Abstradas
+from abc import ABCMeta, abstractmethod  # abstract base classes
+
+from collections.abc import MutableSequence
+from numbers import Complex
+
+class Programa(metaclass = ABCMeta):
     def __init__(self, nome, ano):
         self._nome = nome.title()
         self.ano = ano        
@@ -21,8 +27,9 @@ class Programa:
     def nome(self, novo_nome):
         self._nome = novo_nome.title()  
 
+    @abstractmethod 
     def __str__(self):
-        return f'{self._nome} - {self.ano} - {self._likes} Likes'
+        pass
 
 class Filme(Programa):
     def __init__(self, nome, ano, duracao):
@@ -47,13 +54,17 @@ class Playlist:
         self._programas = programas
         self.nome = nome
 
+    def __getitem__(self, item):
+       return self._programas[item] 
+    
+    def __len__(self):
+        return len(self._programas)
+
     @property
     def listagem(self):
         return self._programas
+    
 
-    @property
-    def tamanho(self):
-        return len(self._programas)
 
 
 if __name__ == '__main__':
